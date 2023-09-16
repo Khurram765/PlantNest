@@ -187,7 +187,7 @@ require("dashboard_part/sidebar.php");
             </div>
         </div> -->
 
-        <div class="row">
+        <!-- <div class="row">
             <div class="col-md-12 col-lg-6">
 
                 <div class="card card-chart">
@@ -211,7 +211,7 @@ require("dashboard_part/sidebar.php");
                     </div>
                 </div>
 
-            </div>
+            </div> -->
 
             <div class="col-md-12 col-lg-6">
 
@@ -225,9 +225,9 @@ require("dashboard_part/sidebar.php");
 </video>
         </div>
     </div>
-    <div class="card-body">
+    <!-- <div class="card-body">
         <div id="apexcharts-area"></div>
-    </div>
+    </div> -->
 </div>
 
 </div>

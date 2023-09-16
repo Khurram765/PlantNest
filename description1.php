@@ -15,12 +15,12 @@
         $fetchProduct = mysqli_fetch_assoc($getProduct);
     }
     else{
-        header("location:./accessory.php");
+        header("location:./accessories.php");
     }
 
 
     
-    // unset($_SESSION['cartDetails']);
+    
 
     if(isset($_POST['cart'])){
         $accessory_id = $_POST['accessory_id'];
@@ -30,19 +30,20 @@
         $merge = ["plantId"=>intval($plantAssoc["accessory_id"]),"plantImage"=>$plantAssoc["image"],"plantName"=>$plantAssoc["name"],"plantPrice"=>$plantAssoc["price"],"plantDescription"=>$plantAssoc["purpose"],"stockQuantity"=>$plantAssoc["price"],"quantity"=>1,"type"=>"a"];
         if(isset($_SESSION['cartDetails'])){
             $bool = false;
-            foreach($_SESSION["cartDetails"] as $data){
-                if($data["accessory_id"]==$merge["accessory_id"]){
-                    echo "<script>alert('This item is already in your cart')</script>";
-                    $bool = true;
-                    break;
-                }   
-           
-            }
+            // foreach($_SESSION["cartDetails"] as $data){
+            //     if($data["accessory_id"]==$merge["accessory_id"]){
+            //         echo "<script>alert('This item is already in your cart')</script>";
+            //         $bool = true;
+            //         break;
+            //     }   
+            // }
             if(!$bool){
               array_push($_SESSION["cartDetails"],$merge);
+              $_SESSION['cartsuccess'] = "Item added in cart successfully";
             }
         }else{
             $_SESSION["cartDetails"] = [$merge];
+            $_SESSION['cartsuccess'] = "Item added in cart successfully";
         }
     }
     
@@ -108,7 +109,7 @@
                 <div class="row align-items-center">
                     <div class="col-lg-2 col-xl-2 col-sm-6 col-6 col-custom">
                         <div class="header-logo d-flex align-items-center">
-                            <a href="index.html">
+                            <a href="index.php">
                                 <img class="img-full" src="assets/images/logo/mainlogo.png" alt="Header Logo">
                             </a>
                         </div>
@@ -117,7 +118,7 @@
                     <nav class="main-nav mr-5 d-none d-lg-flex">
                             <ul class="nav">
                                 <li>
-                                    <a class="active" href="index.php">
+                                    <a  href="index.php">
                                         <span class="menu-text">Home</span>
                                     </a>
                                 </li>
@@ -394,20 +395,20 @@
                             <ul class="address-info">
                                 <li>
                                     <i class="fa fa-phone"></i>
-                                    <a href="info%40yourdomain.html">(1245) 2456 012</a>
+                                    <a href="">(1245) 2456 012</a>
                                 </li>
                                 <li>
                                     <i class="fa fa-envelope"></i>
-                                    <a href="info%40yourdomain.html">info@yourdomain.com</a>
+                                    <a href="mailto:plantnest@gmail.com">info@yourdomain.com</a>
                                 </li>
                             </ul>
-                            <div class="widget-social">
+                            <!-- <div class="widget-social">
                                 <a class="facebook-color-bg" title="Facebook-f" href="#"><i class="fa fa-facebook-f"></i></a>
                                 <a class="twitter-color-bg" title="Twitter" href="#"><i class="fa fa-twitter"></i></a>
                                 <a class="linkedin-color-bg" title="Linkedin" href="#"><i class="fa fa-linkedin"></i></a>
                                 <a class="youtube-color-bg" title="Youtube" href="#"><i class="fa fa-youtube"></i></a>
                                 <a class="vimeo-color-bg" title="Vimeo" href="#"><i class="fa fa-vimeo"></i></a>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                     <!-- offcanvas widget area end -->
@@ -435,7 +436,7 @@
                             </div>
                         </div>
                         <div class="single-product-thumb swiper-container gallery-thumbs">
-                            <div class="swiper-wrapper">
+                            <!-- <div class="swiper-wrapper">
                                 <div class="swiper-slide">
                                     <img src="assets/images/product/small-size/1.jpg" alt="Product">
                                 </div>
@@ -454,7 +455,7 @@
                                 <div class="swiper-slide">
                                     <img src="assets/images/product/small-size/6.jpg" alt="Product">
                                 </div>
-                            </div>
+                            </div> -->
                             
                             <div class="swiper-button-next swiper-button-white"><i class="lnr lnr-arrow-right"></i></div>
                             <div class="swiper-button-prev swiper-button-white"><i class="lnr lnr-arrow-left"></i></div>
@@ -474,8 +475,8 @@
                             <i class="fa fa-star"></i>
                             <i class="fa fa-star"></i>
                             <i class="fa fa-star"></i>
-                            <i class="fa fa-star-o"></i>
-                            <i class="fa fa-star-o"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
                         </div>
                        
                         <p class="desc-content mb-5"><?php echo $fetchProduct['purpose'] ?></p>

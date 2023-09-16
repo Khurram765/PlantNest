@@ -22,7 +22,8 @@
        $rUserId =$_POST['userId'];
        $rPlantId = $_POST['plantId'];
        $rComment = $_POST['comment'];
-       $insertR = mysqli_query($config,"INSERT INTO `reviews`(`review_date`, `user_id`, `plant_id`, `review_text`, `rating`, `delete_status`, `status`) VALUES (NOW(),$rUserId,$rPlantId,'$rComment',5,0,1)");
+       $ratingStars = $_POST['reviewstars'];
+       $insertR = mysqli_query($config,"INSERT INTO `reviews`(`review_date`, `user_id`, `plant_id`, `review_text`, `rating`, `delete_status`, `status`) VALUES (NOW(),$rUserId,$rPlantId,'$rComment',$ratingStars,0,1)");
        if($insertR){
         header("location:./products.php");
        }
@@ -33,6 +34,7 @@
         $wPlantId = $_POST['plantId'];
         $insertW = mysqli_query($config,"INSERT INTO `wishlist`( `user_id`, `plant_id`, `delete_status`, `status`) VALUES ($wUserId,$wPlantId,0,1)");
         if($insertW){
+        $_SESSION['wishsuccess'] = 'This product is added in your wishlist';
          header("location:./wishlist.php");
         }
     }
@@ -50,15 +52,18 @@
                 if($data["plantId"]==$merge["plantId"]){
                     echo "<script>alert('This item is already in your cart')</script>";
                     $bool = true;
+                    $_SESSION['cartfailed'] = "This item is already in cart";
                     break;
                 }   
            
             }
             if(!$bool){
               array_push($_SESSION["cartDetails"],$merge);
+              $_SESSION['cartsuccess'] = "Item added in cart successfully";
             }
         }else{
             $_SESSION["cartDetails"] = [$merge];
+            $_SESSION['cartsuccess'] = "Item added in cart successfully";
         }
     }
 ?>
@@ -123,7 +128,7 @@
                 <div class="row align-items-center">
                     <div class="col-lg-2 col-xl-2 col-sm-6 col-6 col-custom">
                         <div class="header-logo d-flex align-items-center">
-                            <a href="index.html">
+                            <a href="index.php">
                                 <img class="img-full" src="assets/images/logo/mainlogo.png" alt="Header Logo">
                             </a>
                         </div>
@@ -132,7 +137,7 @@
                     <nav class="main-nav mr-5 d-none d-lg-flex">
                             <ul class="nav">
                                 <li>
-                                    <a class="active" href="index.php">
+                                    <a  href="index.php">
                                         <span class="menu-text">Home</span>
                                     </a>
                                 </li>
@@ -409,20 +414,20 @@
                             <ul class="address-info">
                                 <li>
                                     <i class="fa fa-phone"></i>
-                                    <a href="info%40yourdomain.html">(1245) 2456 012</a>
+                                    <a href="">(1245) 2456 012</a>
                                 </li>
                                 <li>
                                     <i class="fa fa-envelope"></i>
-                                    <a href="info%40yourdomain.html">info@yourdomain.com</a>
+                                    <a href="mailto:plantnest@gmail.com">info@yourdomain.com</a>
                                 </li>
                             </ul>
-                            <div class="widget-social">
+                            <!-- <div class="widget-social">
                                 <a class="facebook-color-bg" title="Facebook-f" href="#"><i class="fa fa-facebook-f"></i></a>
                                 <a class="twitter-color-bg" title="Twitter" href="#"><i class="fa fa-twitter"></i></a>
                                 <a class="linkedin-color-bg" title="Linkedin" href="#"><i class="fa fa-linkedin"></i></a>
                                 <a class="youtube-color-bg" title="Youtube" href="#"><i class="fa fa-youtube"></i></a>
                                 <a class="vimeo-color-bg" title="Vimeo" href="#"><i class="fa fa-vimeo"></i></a>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                     <!-- offcanvas widget area end -->
@@ -451,7 +456,7 @@
                         </div>
                         <div class="single-product-thumb swiper-container gallery-thumbs">
                             <div class="swiper-wrapper">
-                                <div class="swiper-slide">
+                                <!-- <div class="swiper-slide">
                                     <img src="assets/images/product/small-size/1.jpg" alt="Product">
                                 </div>
                                 <div class="swiper-slide">
@@ -468,7 +473,7 @@
                                 </div>
                                 <div class="swiper-slide">
                                     <img src="assets/images/product/small-size/6.jpg" alt="Product">
-                                </div>
+                                </div> -->
                             </div>
                             
                             <div class="swiper-button-next swiper-button-white"><i class="lnr lnr-arrow-right"></i></div>
@@ -486,11 +491,19 @@
                             
                         </div>
                         <div class="product-rating mb-3">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star-o"></i>
-                            <i class="fa fa-star-o"></i>
+                            <?php
+                                $getAverage = mysqli_query($config,"SELECT AVG(rating) AS average_rating FROM `reviews` WHERE plant_id = $plantId");
+                                $average = mysqli_fetch_assoc($getAverage);
+                                $averageRating = round($average['average_rating']);
+                                for($i=1;$i<=5;$i++){
+                                    if ($i <= $averageRating) {
+                                        echo '<i class="fa fa-star"></i>'; // Filled star
+                                    } else {
+                                        echo '<i class="fa fa-star-o"></i>'; // Empty star
+                                    }
+                                }
+                            ?>
+                            
                         </div>
                        
                         <p class="desc-content mb-5"><?php echo $fetchProduct['description'] ?></p>
@@ -558,6 +571,10 @@
                         <div class="tab-pane fade" id="connect-2" role="tabpanel" aria-labelledby="profile-tab">
                             <!-- Start Single Content -->
                             <div class="product_tab_content  border p-3">
+                                <div class="section-title text-center mb-30">
+                                    <!-- <span class="section-title-1">The Most Trendy</span> -->
+                                    <h3 class="section-title-3 mt-3">Reviews And Ratings</h3>
+                                </div>
                                 <div class="review_address_inner">
                                     <!-- Start Single Review -->
                                     <?php 
@@ -573,11 +590,21 @@
                                         <div class="review_details">
                                             <div class="review_info mb-2">
                                                 <div class="product-rating mb-2">
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
+                                                    
+                                                    <?php
+                                                        for($i=1;$i<=5;$i++){
+                                                            if ($i <= $fReviews['rating']) {
+                                                                echo '<i class="fa fa-star"></i>'; // Filled star
+                                                            } else {
+                                                                echo '<i class="fa fa-star-o"></i>'; // Empty star
+                                                            }
+                                                        }
+                                                    ?>
+                                                    <!-- <i class="fa fa-star-o fratingstars"></i>
+                                                    <i class="fa fa-star-o fratingstars"></i>
+                                                    <i class="fa fa-star-o fratingstars"></i>
+                                                    <i class="fa fa-star-o fratingstars"></i>
+                                                    <i class="fa fa-star-o fratingstars"></i> -->
                                                 </div>
                                                 <h5><?php echo $fReviews['username'] ?> - <span><?php echo $fReviews['review_date'] ?></span></h5>
                                             </div>
@@ -587,6 +614,9 @@
                                     <?php }}?>
                                     <!-- End Single Review -->
                                 </div>
+                                <?php 
+                                if(isset($_SESSION['userDetails'])){
+                                ?>
                                 <!-- Start RAting Area -->
                                 <div class="rating_wrap">
                                     <h5 class="rating-title-1 font-weight-bold mb-2">Add a review </h5>
@@ -595,25 +625,24 @@
                                     <div class="rating_list mb-4">
                                         <div class="review_info">
                                             <div class="product-rating mb-3">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star-o"></i>
-                                                <i class="fa fa-star-o"></i>
+                                                <i class="fa fa-star-o ratings-star"></i>
+                                                <i class="fa fa-star-o ratings-star"></i>
+                                                <i class="fa fa-star-o ratings-star"></i>
+                                                <i class="fa fa-star-o ratings-star"></i>
+                                                <i class="fa fa-star-o ratings-star"></i>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <!-- End RAting Area -->
-                                <?php 
-                                if(isset($_SESSION['userDetails'])){
-                                ?>
+                                
                                 <div class="comments-area comments-reply-area">
                                     <div class="row">
                                         <div class="col-lg-12 col-custom">
                                             <form method="post" action="./description.php" class="comment-form-area" onsubmit="return reviewValidation()">
                                                 <div class="comment-form-comment mb-3">
                                                     <input hidden type="number" name="userId" id="" value="<?php echo $userId ?>">
+                                                    <input hidden  type="number" name="reviewstars" id="reviewstars" value="">
                                                     <input hidden type="number" name="plantId" id="" value="<?php echo $_GET['plantId'] ?>">
                                                     <label>Comment</label>
                                                     <textarea id="comment" name="comment" class="comment-notes" required="required"></textarea>
@@ -1000,6 +1029,37 @@
                 return ture
             }
         }
+
+        let ratingsStar =document.querySelectorAll('.ratings-star');
+        let reviewStars =document.getElementById('reviewstars');
+        Array.from(ratingsStar).forEach((rs,ind)=>{
+            rs.addEventListener('click',()=>{
+                ratingsStar.forEach((rss)=>{
+                    rss.classList.remove('fa-star');
+                    rss.classList.add('fa-star-o');
+                })
+                for(i=0;i<ind+1;i++){
+                    ratingsStar[i].classList.remove('fa-star-o');
+                    ratingsStar[i].classList.add('fa-star');
+                }
+                reviewStars.value=ind+1
+                
+            })
+        })
+
+        // let fetchStars =document.querySelectorAll(".fetchstars");
+        // let fRatingStars = document.querySelectorAll(".fratingstars");
+        // console.log(fRatingStars);
+        // Array.from(fetchStars).forEach((fs,ind)=>{
+        //     console.log(fs.value);
+        //     for(i=0;i<fs.value;i++){
+        //         fRatingStars[i].classList.remove('fa-star-o');
+        //         // fRatingStars[i].classList.add('fa-star');
+        //         fRatingStars[i].classList.add('fa-star');
+        //         console.log(fRatingStars[i].classList)
+        //     }
+        // });
+        // console.log(fRatingStars);
     </script>
 
 </body>

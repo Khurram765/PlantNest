@@ -11,7 +11,8 @@
 
         $insertContact = mysqli_query($config,"INSERT INTO `feedback`( `feedback_name`, `feedback_email`, `feedback_subject`, `feedback_text`, `delete_status`, `status`) VALUES ('$name','$email','$content','$message',0,1)");
         if($insertContact){
-            header("location:./feedback.php");
+            $_SESSION['successfeedback'] = "Thank you for your feedback!";
+            header("location:./index.php");
         }
     }
 ?>
@@ -35,6 +36,8 @@
 
     <!-- CSS
 	============================================ -->
+    
+  
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="assets/css/vendor/bootstrap.min.css">
     <!-- Font Awesome CSS -->
@@ -54,7 +57,7 @@
 
     <!-- Main Style CSS -->
     <link rel="stylesheet" href="assets/css/style.css">
-
+    
 </head>
 
 <body>
@@ -77,7 +80,7 @@
                 <div class="row align-items-center">
                     <div class="col-lg-2 col-xl-2 col-sm-6 col-6 col-custom">
                         <div class="header-logo d-flex align-items-center">
-                            <a href="index.html">
+                            <a href="index.php">
                                 <img class="img-full" src="assets/images/logo/mainlogo.png" alt="Header Logo">
                             </a>
                         </div>
@@ -86,7 +89,7 @@
                     <nav class="main-nav mr-5 d-none d-lg-flex">
                             <ul class="nav">
                                 <li>
-                                    <a class="active" href="index.php">
+                                    <a  href="index.php">
                                         <span class="menu-text">Home</span>
                                     </a>
                                 </li>
@@ -116,7 +119,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="feedback.php">
+                                    <a class="active" href="feedback.php">
                                         <span class="menu-text">FeedBack</span>
                                     </a>
                                 </li>
@@ -363,20 +366,20 @@
                             <ul class="address-info">
                                 <li>
                                     <i class="fa fa-phone"></i>
-                                    <a href="info%40yourdomain.html">(1245) 2456 012</a>
+                                    <a href="i">(1245) 2456 012</a>
                                 </li>
                                 <li>
                                     <i class="fa fa-envelope"></i>
-                                    <a href="info%40yourdomain.html">info@yourdomain.com</a>
+                                    <a href="mailto:plantnest@gmail.com">info@yourdomain.com</a>
                                 </li>
                             </ul>
-                            <div class="widget-social">
+                            <!-- <div class="widget-social">
                                 <a class="facebook-color-bg" title="Facebook-f" href="#"><i class="fa fa-facebook-f"></i></a>
                                 <a class="twitter-color-bg" title="Twitter" href="#"><i class="fa fa-twitter"></i></a>
                                 <a class="linkedin-color-bg" title="Linkedin" href="#"><i class="fa fa-linkedin"></i></a>
                                 <a class="youtube-color-bg" title="Youtube" href="#"><i class="fa fa-youtube"></i></a>
                                 <a class="vimeo-color-bg" title="Vimeo" href="#"><i class="fa fa-vimeo"></i></a>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                     <!-- offcanvas widget area end -->
@@ -426,7 +429,7 @@
             </div> -->
             <div class="row">
                 <div class="col-md-12 col-custom">
-                    <form method="post" action="./contact.php" id=""  class="contact-form" onsubmit="return contactValidate()">
+                    <form method="post" action="./feedback.php" id=""  class="contact-form" onsubmit="return contactValidate()">
                         <div class="comment-box mt-5">
                             <h5 class="text-uppercase">Get in Touch</h5>
                             <div class="row mt-3">
@@ -451,7 +454,7 @@
                                     </div>
                                 </div>
                                 <div class="col-12 col-custom mt-40">
-                                    <button type="submit"  name="submit" class="btn flosun-button secondary-btn theme-color rounded-0">Send A Message</button>
+                                    <button type="submit"  name="submit" class="btn flosun-button secondary-btn theme-color rounded-0">Send Feedback</button>
                                 </div>
                                 <p class="col-8 col-custom form-message mb-0"></p>
                             </div>
@@ -592,6 +595,8 @@
     <!-- jquery magnific popup js -->
     <script src="assets/js/plugins/jquery.magnific-popup.min.js"></script>
 
+    
+
     <!-- Main JS -->
     <script src="assets/js/main.js"></script>
 
@@ -608,21 +613,25 @@
 
             if(name.value=="" || name.value.length<6){
                 name.style.border="1px solid red";
+                name.classList.remove('border-0');
                 errorArray.push(false);
             }
 
             if(!emailRegex.test(email.value) || email.value==""){
                 email.style.border="1px solid red";
+                email.classList.remove('border-0');
                 errorArray.push(false);
             }
 
             if(subject.value=="" || subject.value.length<6){
                 subject.style.border="1px solid red";
+                subject.classList.remove('border-0');
                 errorArray.push(false);
             }
 
             if(message.value=="" || message.value.length < 11){
                 message.style.border="1px solid red";
+                message.classList.remove('border-0');
                 errorArray.push(false);
             }
             
@@ -632,6 +641,13 @@
                 return true;
             }
         }
+
+        let fields =document.querySelectorAll(".rounded-0");
+        fields.forEach((f)=>{
+            f.addEventListener("focus",()=>{
+                f.classList.add("border-0");
+            })
+        })
     </script>
 
 

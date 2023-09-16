@@ -63,7 +63,7 @@
                 <div class="row align-items-center">
                     <div class="col-lg-2 col-xl-2 col-sm-6 col-6 col-custom">
                         <div class="header-logo d-flex align-items-center">
-                            <a href="index.html">
+                            <a href="index.php">
                                 <img class="img-full" src="assets/images/logo/mainlogo.png" alt="Header Logo">
                             </a>
                         </div>
@@ -72,7 +72,7 @@
                     <nav class="main-nav mr-5 d-none d-lg-flex">
                             <ul class="nav">
                                 <li>
-                                    <a class="active" href="index.php">
+                                    <a  href="index.php">
                                         <span class="menu-text">Home</span>
                                     </a>
                                 </li>
@@ -80,7 +80,7 @@
                                 
                                 
                                 <li>
-                                    <a href="products.php">
+                                    <a class="active" href="products.php">
                                         <span class="menu-text">PlantCatalog</span>
                                     </a>
                                 </li>
@@ -353,16 +353,16 @@
                                 </li>
                                 <li>
                                     <i class="fa fa-envelope"></i>
-                                    <a href="info%40yourdomain.html">info@yourdomain.com</a>
+                                    <a href="mailto:plantnest@gmail.com">info@yourdomain.com</a>
                                 </li>
                             </ul>
-                            <div class="widget-social">
+                            <!-- <div class="widget-social">
                                 <a class="facebook-color-bg" title="Facebook-f" href="#"><i class="fa fa-facebook-f"></i></a>
                                 <a class="twitter-color-bg" title="Twitter" href="#"><i class="fa fa-twitter"></i></a>
                                 <a class="linkedin-color-bg" title="Linkedin" href="#"><i class="fa fa-linkedin"></i></a>
                                 <a class="youtube-color-bg" title="Youtube" href="#"><i class="fa fa-youtube"></i></a>
                                 <a class="vimeo-color-bg" title="Vimeo" href="#"><i class="fa fa-vimeo"></i></a>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                     <!-- offcanvas widget area end -->
@@ -372,7 +372,27 @@
         <!-- off-canvas menu end -->
     </header>
     <!-- Header Area End Here -->
-    
+            <?php
+            if(isset($_SESSION['cartsuccess'])){
+            ?>
+            <div class="alert alert-success alert-dismissable">
+                <span style="position: relative; left:100%;" class="closebtn btn btn-close" onclick="this.parentElement.style.display='none';">&times;</span>
+            <?php echo $_SESSION['cartsuccess'] ?>
+            </div>
+            <?php }
+                unset($_SESSION["cartsuccess"]);
+            ?>
+
+            <?php
+            if(isset($_SESSION['cartfailed'])){
+            ?>
+            <div class="alert alert-danger alert-dismissable">
+                <span style="position: relative; left:100%;" class="closebtn btn btn-close" onclick="this.parentElement.style.display='none';">&times;</span>
+            <?php echo $_SESSION['cartfailed'] ?>
+            </div>
+            <?php }
+                unset($_SESSION["cartfailed"]);
+            ?>
     <!-- Shop Main Area Start Here -->
     <div class="shop-main-area">
         <div class="container container-default custom-area">
@@ -529,7 +549,7 @@
                                         <?php }}?>
                                         
                                     </select>
-                                    <a style="width:100%" class="border p-2" href="accessory.php">Check Accessory</a>
+                                    <a style="width:100%" class="border p-2" href="accessories.php">Check Accessory</a>
                                     <!-- <ul class="mobile-menu p-0 m-0">
                                         <li class="menu-item-has-children"><a href="#">Birthday Boqutets</a>
                                             <ul class="dropdown">
@@ -975,6 +995,7 @@
             function loadCategory(j){
                 console.log(j);
                 if(j==""){
+                    productContainer.html("");
                     loadData();
                 }else{
                     $.ajax({

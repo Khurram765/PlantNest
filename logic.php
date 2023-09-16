@@ -5,6 +5,18 @@ if($_POST['type']=='load'){
     $fetchPlants = mysqli_query($config,"SELECT * FROM plants WHERE delete_status = 0");
     if($fetchPlants){
         while($fp = mysqli_fetch_assoc($fetchPlants)){
+            $plantId = $fp['plant_id'];
+            $getAverage = mysqli_query($config,"SELECT AVG(rating) AS average_rating FROM `reviews` WHERE plant_id = $plantId");
+            $average = mysqli_fetch_assoc($getAverage);
+            $averageRating = round($average['average_rating']);
+            $stars = "";
+            for($i=1;$i<=5;$i++){
+                if ($i <= $averageRating) {
+                    $stars.= '<i class="fa fa-star"></i>'; // Filled star
+                } else {
+                    $stars.= '<i class="fa fa-star-o"></i>'; // Empty star
+                }
+            }
             $result .= "<div class='col-md-6 col-sm-6 col-lg-4 col-custom product-area'>
             <div class='product-item'>
                 <div class='single-product position-relative mr-0 ml-0'>
@@ -27,11 +39,7 @@ if($_POST['type']=='load'){
                             <h4 class='title-2'> <a href='description.php'>{$fp['name']}</a></h4>
                         </div>
                         <div class='product-rating'>
-                            <i class='fa fa-star'></i>
-                            <i class='fa fa-star'></i>
-                            <i class='fa fa-star'></i>
-                            <i class='fa fa-star-o'></i>
-                            <i class='fa fa-star-o'></i>
+                            {$stars}
                         </div>
                         <div class='price-box'>
                             <span class='regular-price '>{$fp['price']}</span>
@@ -69,6 +77,18 @@ if($_POST['type']=='load'){
     $fetchPlants = mysqli_query($config,"SELECT * FROM plants WHERE delete_status = 0 ORDER BY price ASC ");
     if($fetchPlants){
         while($fp = mysqli_fetch_assoc($fetchPlants)){
+            $plantId = $fp['plant_id'];
+            $getAverage = mysqli_query($config,"SELECT AVG(rating) AS average_rating FROM `reviews` WHERE plant_id = $plantId");
+            $average = mysqli_fetch_assoc($getAverage);
+            $averageRating = round($average['average_rating']);
+            $stars = "";
+            for($i=1;$i<=5;$i++){
+                if ($i <= $averageRating) {
+                    $stars.= '<i class="fa fa-star"></i>'; // Filled star
+                } else {
+                    $stars.= '<i class="fa fa-star-o"></i>'; // Empty star
+                }
+            }
             $result .= "<div class='col-md-6 col-sm-6 col-lg-4 col-custom product-area'>
             <div class='product-item'>
                 <div class='single-product position-relative mr-0 ml-0'>
@@ -91,11 +111,7 @@ if($_POST['type']=='load'){
                             <h4 class='title-2'> <a href='description.php'>{$fp['name']}</a></h4>
                         </div>
                         <div class='product-rating'>
-                            <i class='fa fa-star'></i>
-                            <i class='fa fa-star'></i>
-                            <i class='fa fa-star'></i>
-                            <i class='fa fa-star-o'></i>
-                            <i class='fa fa-star-o'></i>
+                            {$stars}
                         </div>
                         <div class='price-box'>
                             <span class='regular-price '>{$fp['price']}</span>
@@ -133,6 +149,18 @@ if($_POST['type']=='load'){
     $fetchPlants = mysqli_query($config,"SELECT * FROM plants WHERE delete_status = 0 ORDER BY price DESC ");
     if($fetchPlants){
         while($fp = mysqli_fetch_assoc($fetchPlants)){
+            $plantId = $fp['plant_id'];
+            $getAverage = mysqli_query($config,"SELECT AVG(rating) AS average_rating FROM `reviews` WHERE plant_id = $plantId");
+            $average = mysqli_fetch_assoc($getAverage);
+            $averageRating = round($average['average_rating']);
+            $stars = "";
+            for($i=1;$i<=5;$i++){
+                if ($i <= $averageRating) {
+                    $stars.= '<i class="fa fa-star"></i>'; // Filled star
+                } else {
+                    $stars.= '<i class="fa fa-star-o"></i>'; // Empty star
+                }
+            }
             $result .= "<div class='col-md-6 col-sm-6 col-lg-4 col-custom product-area'>
             <div class='product-item'>
                 <div class='single-product position-relative mr-0 ml-0'>
@@ -155,11 +183,7 @@ if($_POST['type']=='load'){
                             <h4 class='title-2'> <a href='description.php'>{$fp['name']}</a></h4>
                         </div>
                         <div class='product-rating'>
-                            <i class='fa fa-star'></i>
-                            <i class='fa fa-star'></i>
-                            <i class='fa fa-star'></i>
-                            <i class='fa fa-star-o'></i>
-                            <i class='fa fa-star-o'></i>
+                            {$stars}
                         </div>
                         <div class='price-box'>
                             <span class='regular-price '>{$fp['price']}</span>
@@ -198,6 +222,18 @@ if($_POST['type']=='load'){
     $fetchPlants = mysqli_query($config,"SELECT * FROM plants WHERE `name` LIKE '%$searchValue%' OR `price` LIKE '%$searchValue%' ");
     if($fetchPlants){
         while($fp = mysqli_fetch_assoc($fetchPlants)){
+            $plantId = $fp['plant_id'];
+            $getAverage = mysqli_query($config,"SELECT AVG(rating) AS average_rating FROM `reviews` WHERE plant_id = $plantId");
+            $average = mysqli_fetch_assoc($getAverage);
+            $averageRating = round($average['average_rating']);
+            $stars = "";
+            for($i=1;$i<=5;$i++){
+                if ($i <= $averageRating) {
+                    $stars.= '<i class="fa fa-star"></i>'; // Filled star
+                } else {
+                    $stars.= '<i class="fa fa-star-o"></i>'; // Empty star
+                }
+            }
             $result .= "<div class='col-md-6 col-sm-6 col-lg-4 col-custom product-area'>
             <div class='product-item'>
                 <div class='single-product position-relative mr-0 ml-0'>
@@ -220,11 +256,7 @@ if($_POST['type']=='load'){
                             <h4 class='title-2'> <a href='description.php'>{$fp['name']}</a></h4>
                         </div>
                         <div class='product-rating'>
-                            <i class='fa fa-star'></i>
-                            <i class='fa fa-star'></i>
-                            <i class='fa fa-star'></i>
-                            <i class='fa fa-star-o'></i>
-                            <i class='fa fa-star-o'></i>
+                            {$stars}
                         </div>
                         <div class='price-box'>
                             <span class='regular-price '>{$fp['price']}</span>
@@ -263,6 +295,18 @@ if($_POST['type']=='load'){
     $fetchPlants = mysqli_query($config,"SELECT * FROM plants WHERE category_id = $categoryId AND delete_status = 0 ");
     if($fetchPlants){
         while($fp = mysqli_fetch_assoc($fetchPlants)){
+            $plantId = $fp['plant_id'];
+            $getAverage = mysqli_query($config,"SELECT AVG(rating) AS average_rating FROM `reviews` WHERE plant_id = $plantId");
+            $average = mysqli_fetch_assoc($getAverage);
+            $averageRating = round($average['average_rating']);
+            $stars = "";
+            for($i=1;$i<=5;$i++){
+                if ($i <= $averageRating) {
+                    $stars.= '<i class="fa fa-star"></i>'; // Filled star
+                } else {
+                    $stars.= '<i class="fa fa-star-o"></i>'; // Empty star
+                }
+            }
             $result .= "<div class='col-md-6 col-sm-6 col-lg-4 col-custom product-area'>
             <div class='product-item'>
                 <div class='single-product position-relative mr-0 ml-0'>
@@ -285,11 +329,7 @@ if($_POST['type']=='load'){
                             <h4 class='title-2'> <a href='description.php'>{$fp['name']}</a></h4>
                         </div>
                         <div class='product-rating'>
-                            <i class='fa fa-star'></i>
-                            <i class='fa fa-star'></i>
-                            <i class='fa fa-star'></i>
-                            <i class='fa fa-star-o'></i>
-                            <i class='fa fa-star-o'></i>
+                            {$stars}
                         </div>
                         <div class='price-box'>
                             <span class='regular-price '>{$fp['price']}</span>

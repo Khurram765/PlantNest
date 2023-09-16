@@ -12,8 +12,8 @@ if($_POST['type']=='load'){
         while($fp = mysqli_fetch_assoc($fetchaccessories)){
             $result .= "<div class='col-md-6 col-sm-6 col-lg-4 col-custom product-area'>
             <div class='product-item'>
-                <div class='single-product position-relative mr-0 ml-0'>
-                    <div class='product-image'>
+                <div  class='single-product position-relative mr-0 ml-0'>
+                    <div style='height:240px' class='product-image'>
                         <a class='d-block' href='description1.php?accessory_id={$fp['accessory_id']}'>
                             <img src='./admin/uploads_img/{$fp['image']}' alt='' class='product-image-1 w-100'>
                             <img src='./admin/uploads_img/{$fp['image']}' alt='' class='product-image-2 position-absolute w-100'>
@@ -35,7 +35,7 @@ if($_POST['type']=='load'){
                             <i class='fa fa-star'></i>
                             <i class='fa fa-star'></i>
                             <i class='fa fa-star'></i>
-                            <i class='fa fa-star-o'></i>
+                            <i class='fa fa-star'></i>
                             <i class='fa fa-star-o'></i>
                         </div>
                         <div class='price-box'>

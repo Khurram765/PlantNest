@@ -28,11 +28,11 @@ if($_POST['type']=="search"){
             // Open the <td> tag here
     
             if ($row['status'] == 1) {
-                $output .= 'Pending';
+                $output .= '<span style="color:#FFD700;">Pending</span>';
             } else if ($row['status'] == 0) {
-                $output .= 'Completed';
+                $output .= '<span class="text-success">Completed</span>';
             }else{
-                $output .= 'Cancelled';
+                $output .= '<span class="text-danger">Cancelled</span>';
             }
     
             $output .= '</td>'; // Close the <td> tag here
@@ -90,11 +90,11 @@ if (mysqli_num_rows($run) > 0) {
         // Open the <td> tag here
 
         if ($row['status'] == 1) {
-            $output .= 'Pending';
+            $output .= '<span style="color:#FFD700;">Pending</span>';
         } else if ($row['status'] == 0) {
-            $output .= 'Completed';
+            $output .= '<span class="text-success">Completed</span>';
         }else{
-            $output .= 'Cancelled';
+            $output .= '<span class="text-danger">Cancelled</span>';
         }
 
         $output .= '</td>'; // Close the <td> tag here

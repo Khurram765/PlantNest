@@ -81,7 +81,7 @@
                 <div class="row align-items-center">
                     <div class="col-lg-2 col-xl-2 col-sm-6 col-6 col-custom">
                         <div class="header-logo d-flex align-items-center">
-                            <a href="index.html">
+                            <a href="index.php">
                                 <img class="img-full" src="assets/images/logo/mainlogo.png" alt="Header Logo">
                             </a>
                         </div>
@@ -90,7 +90,7 @@
                     <nav class="main-nav mr-5 d-none d-lg-flex">
                             <ul class="nav">
                                 <li>
-                                    <a class="active" href="index.php">
+                                    <a  href="index.php">
                                         <span class="menu-text">Home</span>
                                     </a>
                                 </li>
@@ -129,8 +129,8 @@
                         <div class="header-right-area main-nav">
                             <ul class="nav">
                                 <li class="minicart-wrap">
-                                    <a href="./cart.php" class="minicart-btn toolbar-btn">
-                                        <i class="fa fa-shopping-cart"></i>
+                                    <a  href="./cart.php" class="minicart-btn toolbar-btn">
+                                        <i style="color:green;" class="fa fa-shopping-cart"></i>
                                         <?php
                                             if(isset($_SESSION['cartDetails'])){
                                         ?>
@@ -302,20 +302,20 @@
                             <ul class="address-info">
                                 <li>
                                     <i class="fa fa-phone"></i>
-                                    <a href="info%40yourdomain.html">(1245) 2456 012</a>
+                                    <a href="">(1245) 2456 012</a>
                                 </li>
                                 <li>
                                     <i class="fa fa-envelope"></i>
-                                    <a href="info%40yourdomain.html">info@yourdomain.com</a>
+                                    <a href="mailto:plantnest@gmail.com">info@yourdomain.com</a>
                                 </li>
                             </ul>
-                            <div class="widget-social">
+                            <!-- <div class="widget-social">
                                 <a class="facebook-color-bg" title="Facebook-f" href="#"><i class="fa fa-facebook-f"></i></a>
                                 <a class="twitter-color-bg" title="Twitter" href="#"><i class="fa fa-twitter"></i></a>
                                 <a class="linkedin-color-bg" title="Linkedin" href="#"><i class="fa fa-linkedin"></i></a>
                                 <a class="youtube-color-bg" title="Youtube" href="#"><i class="fa fa-youtube"></i></a>
                                 <a class="vimeo-color-bg" title="Vimeo" href="#"><i class="fa fa-vimeo"></i></a>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -398,7 +398,7 @@
                     <div class="breadcrumb-content position-relative section-content">
                         <h3 class="title-3">Shopping Cart</h3>
                         <ul>
-                            <li><a href="index.html">Home</a></li>
+                            <li><a href="index.php">Home</a></li>
                             <li>Shopping Cart</li>
                         </ul>
                     </div>
@@ -440,7 +440,7 @@
                                             <div class="d-flex">
                                                 <div data-id="<?php echo $data['plantId'] ?>" class="inc qtybutton"><i class="fa fa-plus"></i></div>
                                                 &nbsp;&nbsp;&nbsp;
-                                                <input style="text-align: center; width: 50%;"  class="cart-plus-minus-box quantity" value="<?php echo $data['quantity'] ?>" type="text">
+                                                <input readonly style="text-align: center; width: 50%;"  class="cart-plus-minus-box quantity" value="<?php echo $data['quantity'] ?>" type="text">
                                                 
                                                 <!-- <div id="decrement" class="dec qtybutton">-</div>
                                                 <div  id="increment" class="inc qtybutton">+</div> -->
@@ -453,9 +453,9 @@
                                     <td class="pro-remove">
                                         <form action="./cart.php" method="post">
                                             <input class="plantid" hidden type="number" name="plantId" value='<?php echo $data['plantId'] ?>' id="">
-                                            <button type="submit" name='deleteCart'><i class="lnr lnr-trash"></button>
+                                            <button type="submit" name='deleteCart'><i class="lnr lnr-trash"></i></button>
                                         </form>
-                                        <!-- <a href="#"><i class="lnr lnr-trash"></i></a> -->
+                                        
                                     </td>
                                 </tr>
                                 <?php }}?>
@@ -548,7 +548,7 @@
                                         <td class="total-amount" id="subTotal">0</td>
                                     </tr>
                                     <tr>
-                                        <td>Shipping</td>
+                                        <td>Shipping Charges</td>
                                         <td class="shipping-amount">
                                             0
                                         </td>

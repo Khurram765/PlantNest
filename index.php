@@ -65,7 +65,7 @@
                 <div class="row align-items-center">
                     <div class="col-lg-2 col-xl-2 col-sm-6 col-6 col-custom">
                         <div class="header-logo d-flex align-items-center">
-                            <a href="index.html">
+                            <a href="index.php">
                                 <img class="img-full" src="assets\images\logo\mainlogo.png" alt="Header Logo">
                             </a>
                         </div>
@@ -354,20 +354,20 @@
                             <ul class="address-info">
                                 <li>
                                     <i class="fa fa-phone"></i>
-                                    <a href="info%40yourdomain.html">(1245) 2456 012</a>
+                                    <a href="">(1245) 2456 012</a>
                                 </li>
                                 <li>
                                     <i class="fa fa-envelope"></i>
-                                    <a href="info%40yourdomain.html">info@yourdomain.com</a>
+                                    <a href="mailto:plantnest@gmail.com">info@yourdomain.com</a>
                                 </li>
                             </ul>
-                            <div class="widget-social">
+                            <!-- <div class="widget-social">
                                 <a class="facebook-color-bg" title="Facebook-f" href="#"><i class="fa fa-facebook-f"></i></a>
                                 <a class="twitter-color-bg" title="Twitter" href="#"><i class="fa fa-twitter"></i></a>
                                 <a class="linkedin-color-bg" title="Linkedin" href="#"><i class="fa fa-linkedin"></i></a>
                                 <a class="youtube-color-bg" title="Youtube" href="#"><i class="fa fa-youtube"></i></a>
                                 <a class="vimeo-color-bg" title="Vimeo" href="#"><i class="fa fa-vimeo"></i></a>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                     <!-- offcanvas widget area end -->
@@ -377,6 +377,38 @@
         <!-- off-canvas menu end -->
     </header>
     <!-- Header Area End Here -->
+            <?php
+            if(isset($_SESSION['successfeedback'])){
+            ?>
+            <div class="alert alert-success alert-dismissable">
+                <span style="position: relative; left:100%;" class="closebtn btn btn-close" onclick="this.parentElement.style.display='none';">&times;</span>
+            <?php echo $_SESSION['successfeedback'] ?>
+            </div>
+            <?php }
+                unset($_SESSION["successfeedback"]);
+            ?>
+
+            <?php
+            if(isset($_SESSION['checkoutsuccess'])){
+            ?>
+            <div class="alert alert-success alert-dismissable">
+                <span style="position: relative; left:100%;" class="closebtn btn btn-close" onclick="this.parentElement.style.display='none';">&times;</span>
+            <?php echo $_SESSION['checkoutsuccess'] ?>
+            </div>
+            <?php }
+                unset($_SESSION["checkoutsuccess"]);
+            ?>
+
+            <?php
+            if(isset($_SESSION['checkoutfailed'])){
+            ?>
+            <div class="alert alert-danger alert-dismissable">
+                <span style="position: relative; left:100%;" class="closebtn btn btn-close" onclick="this.parentElement.style.display='none';">&times;</span>
+            <?php echo $_SESSION['checkoutfailed'] ?>
+            </div>
+            <?php }
+                unset($_SESSION["checkoutfailed"]);
+            ?>
 
     <!-- Slider/Intro Section Start -->
     <div class="intro11-slider-wrap section-2 mrl-50">
@@ -454,11 +486,24 @@
                                             <h4 class="title-2"> <a href="product-details.php"><?php echo $row['name'] ?></a></h4>
                                         </div>
                                         <div class="product-rating">
-                                            <i class="fa fa-star"></i>
+                                        <?php
+                                            $plantId = $row['plant_id'];
+                                            $getAverage = mysqli_query($config,"SELECT AVG(rating) AS average_rating FROM `reviews` WHERE plant_id = $plantId");
+                                            $average = mysqli_fetch_assoc($getAverage);
+                                            $averageRating = round($average['average_rating']);
+                                            for($i=1;$i<=5;$i++){
+                                                if ($i <= $averageRating) {
+                                                    echo '<i class="fa fa-star"></i>'; // Filled star
+                                                } else {
+                                                    echo '<i class="fa fa-star-o"></i>'; // Empty star
+                                                }
+                                            }
+                                        ?>
+                                            <!-- <i class="fa fa-star"></i>
                                             <i class="fa fa-star"></i>
                                             <i class="fa fa-star"></i>
                                             <i class="fa fa-star-o"></i>
-                                            <i class="fa fa-star-o"></i>
+                                            <i class="fa fa-star-o"></i> -->
                                         </div>
                                         <div class="price-box">
                                             <span class="regular-price ">$<?php echo $row['price']-$row['discount'] ?></span>
